@@ -79,7 +79,7 @@ static int display_help(void) {
 /*
  * Handle command line flags and arguments.
  */
-int main (int argc, char *argv[]) {
+int main (int argc, char *argv[]) { //TEEEEEST
 
   // Count Mode (default): outputs the total amount of words counted
   bool count_mode = true;
