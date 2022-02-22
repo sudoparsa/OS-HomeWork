@@ -1,0 +1,23 @@
+make is used to build projects with dependencies such that it only recompiles files that have been changed.
+
+Setting variables:
+=  only looks for the variables when the command is used, not when it's defined.
+:= only those defined so far get expanded.
+?= only sets variables if they have not been set yet.
+
+$@: The filename representing the target
+$^: The filenames of all the prerequisites, separated by spaces. This list has duplicate filenames removed.
+
+Macros:
+#1: By default, the goal is the first target in the makefile.
+You can manage the selection of the default goal from within your makefile using the .DEFAULT_GOAL variable.
+#3: variable for C compiler
+#4: CFLAGS is for supplying compiler options from the command line.
+#5: variable for sources files
+#6: comment
+#7: variable for libraries
+#8: variable for binaries
+
+#10:    any file ending in .c
+#13:    clean is often used as a target that removes the output of other targets.
+#16:    default target
