@@ -1,13 +1,56 @@
 1.
 
+gcc -m32 -S -o recurse.S recurse.c
+
+movl	8(%ebp), %eax
+subl	$1, %eax
+subl	$12, %esp
+pushl	%eax
+call	recur
+
 2.
+
+.text
+قسمت اصلی کد ماشین در این بخش است
+.data
+بخش مربوط به ناحیه حافظه است. در هنگام اجرای برنامه استاتیک است
 
 3.
 
-4
+objdump --syms map.obj
+
+map.obj:     file format elf32-i386
+
+SYMBOL TABLE:
+00000000 l    df *ABS*  00000000 map.c
+00000000 l    d  .text  00000000 .text
+00000000 l    d  .data  00000000 .data
+00000000 l    d  .bss   00000000 .bss
+00000000 l    d  .text.__x86.get_pc_thunk.bx    00000000 .text.__x86.get_pc_thunk.bx
+00000000 l    d  .note.GNU-stack        00000000 .note.GNU-stack
+00000000 l    d  .eh_frame      00000000 .eh_frame
+00000000 l    d  .comment       00000000 .comment
+00000000 l    d  .group 00000000 .group
+00000004       O *COM*  00000004 foo
+00000000 g     O .data  00000004 stuff
+00000000 g     F .text  00000060 main
+00000000 g     F .text.__x86.get_pc_thunk.bx    00000000 .hidden __x86.get_pc_thunk.bx
+00000000         *UND*  00000000 _GLOBAL_OFFSET_TABLE_
+00000000         *UND*  00000000 malloc
+00000000         *UND*  00000000 recur
+
+4.
+
+
 
 5.
 
+
+
 6.
 
+
+
 7.
+
+
