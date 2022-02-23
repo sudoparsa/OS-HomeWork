@@ -1,0 +1,23 @@
+ابتدا بعد از نصب
+vagrant
+و ماشین مجازی، روی ویندوز نشست
+ssh
+برقرار کرده و به ماشین مجازی وصل شدم. در این قسمت به مشکلی برنخوردم
+بعد مدتی طول کشید که ساختار فایل‌ها را بفهمم و یک پوش تست بکنم
+بعد در ادامه چون کد سی یادم رفته بود و 
+make
+و
+gdb
+هم تا حالا کار نکرده بودم،وقتم صرف یادگیریشان شد
+برای ویرایش کد و فایلها از 
+vc code
+روی سیستم خودم استفاده کردم
+در انتها منابعی که از آن کمک گرفتم در زیر آورده‌ام
+
+
+منابع:
+
+https://makefiletutorial.com/#variables-pt-2
+https://www.gnu.org/software/make/manual/html_node/Goals.html
+https://docs.oracle.com/cd/E19504-01/802-5880/6i9k05dhg/index.html
+https://sourceware.org/binutils/docs/binutils/objdump.html
