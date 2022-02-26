@@ -1,10 +1,10 @@
-24-02-2022 13:55:01
-Your grade is 0.0/100.
+26-02-2022 14:49:48
+Your grade is 16.67/100.
 
 Passed:
+Task << exec cd and pwd >> passed!
 
 Not passed:
-Task << exec cd and pwd >> not passed!
 Task << exec external program >> not passed!
 Task << path resolution >> not passed!
 Task << work with file for input and output >> not passed!
@@ -12,4 +12,4 @@ Task << background process >> not passed!
 Task << work with signal >> not passed!
 
 Note: Task << work with signals >> will check manually. You're maximum grade from judge will be about 83.
-epoch: 1645710901
+epoch: 1645886988
