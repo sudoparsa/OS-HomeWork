@@ -25,6 +25,10 @@ int cmd_quit(tok_t arg[]) {
 
 int cmd_help(tok_t arg[]);
 
+int cmd_pwd(tok_t arg[]);
+
+int cmd_cd(tok_t arg[]);
+
 
 /* Command Lookup table */
 typedef int cmd_fun_t (tok_t args[]); /* cmd functions take token array and return int */
@@ -37,6 +41,8 @@ typedef struct fun_desc {
 fun_desc_t cmd_table[] = {
   {cmd_help, "?", "show this help menu"},
   {cmd_quit, "quit", "quit the command shell"},
+  {cmd_pwd, "pwd", "print name of current/working directory"},
+  {cmd_cd, "cd", "change directory"},
 };
 
 int cmd_help(tok_t arg[]) {
@@ -44,6 +50,19 @@ int cmd_help(tok_t arg[]) {
   for (i=0; i < (sizeof(cmd_table)/sizeof(fun_desc_t)); i++) {
     printf("%s - %s\n",cmd_table[i].cmd, cmd_table[i].doc);
   }
+  return 1;
+}
+
+int cmd_pwd(tok_t arg[]) {
+  char *cwd = malloc(INPUT_STRING_SIZE+1);
+  size_t size = INPUT_STRING_SIZE+1;
+  cwd = getcwd(cwd, size);
+  printf("%s\n", cwd);
+  return 1;
+}
+
+int cmd_cd(tok_t arg[]) {
+  chdir(arg[0]);
   return 1;
 }
 
