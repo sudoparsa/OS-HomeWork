@@ -28,6 +28,12 @@ tok_t *getToks(char *line) {
   return toks;
 }
 
+int countToks(tok_t *toks) {
+  int i=0;
+  for (i=0; (i < MAXTOKS) && toks[i]; i++);
+  return i;
+}
+
 void freeToks(tok_t *toks) {
   free(toks);
 }
