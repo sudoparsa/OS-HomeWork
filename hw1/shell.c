@@ -182,9 +182,7 @@ int shell (int argc, char *argv[]) {
     fundex = lookup(t[0]); /* Is first token a shell literal */
     if(fundex >= 0) cmd_table[fundex].fun(&t[1]);
     else {
-      if (create_process(t) < 0) {
-        fprintf(stdout, "This shell only supports built-ins. Replace this to run programs as commands.\n");
-      }
+      create_process(t);
     }
     // fprintf(stdout, "%d: ", lineNum);
   }
