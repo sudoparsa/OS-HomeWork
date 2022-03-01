@@ -154,7 +154,7 @@ int create_process(tok_t* argv) {
   }
   int cpid = fork();
   if (cpid > 0) {
-;
+    wait(0);
   } else if (cpid == 0) {
     return execute(argv[0], argv);
   }
