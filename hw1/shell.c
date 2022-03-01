@@ -133,7 +133,6 @@ int execute(char* file_path, tok_t* vars) {
   // check PATH
   const char* PATH = getenv("PATH");
   if (PATH == NULL) {
-    // printf("getenv returned NULL\n");
     return -1;
   }
   for (char* c = strtok(PATH, ":"); c; c = strtok(NULL, ":")) {
