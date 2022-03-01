@@ -103,13 +103,13 @@ void init_shell()
   /** YOUR CODE HERE */
   // create first process
   first_process = (process *) malloc(sizeof(process));;
-  first_process-> pid = getpid();
-  first_process-> completed = 0;
-  first_process-> stopped = 0;
-  first_process-> background = 0;
-  first_process-> status = 0;
-  first_process-> next = NULL;
-  first_process-> prev = NULL;
+  first_process->pid = getpid();
+  first_process->completed = 0;
+  first_process->stopped = 0;
+  first_process->background = 0;
+  first_process->status = 0;
+  first_process->next = NULL;
+  first_process->prev = NULL;
 }
 
 /**
@@ -125,24 +125,23 @@ void add_process(process* p)
   p->prev = process;
 }
 
-/**
- * Creates a process given the inputString from stdin
- */
-process* create_process(tok_t* argv) {
-  if (argv == NULL || argv[0] == NULL) {
-    return NULL;
-  }
-  process *proc = (process *) malloc(sizeof(process));;
-  proc->argv = argv;
-  proc->argc = countToks(argv);
-  proc->completed = 0;
-  proc->stopped = 0;
-  proc->background = 0;
-  proc->status = 0;
-  proc->pid = getpid();
-  add_process(proc);
+int execute(char* path, tok_t* vars) {
+  return execv(path, vars);
+}
 
-  return proc;
+int create_process(tok_t* argv) {
+  if (argv == NULL || argv[0] == NULL) {
+    return -1;
+  }
+  int cpid = fork();
+  if (cpid > 0) {
+;
+  } else if (cpid == 0) {
+    return execute(argv[0], argv);
+  }
+
+
+  return 1;
 }
 
 
@@ -167,8 +166,9 @@ int shell (int argc, char *argv[]) {
     fundex = lookup(t[0]); /* Is first token a shell literal */
     if(fundex >= 0) cmd_table[fundex].fun(&t[1]);
     else {
-      // fprintf(stdout, "This shell only supports built-ins. Replace this to run programs as commands.\n");
-      create_process(t);
+      if (create_process(t) < 0) {
+        fprintf(stdout, "This shell only supports built-ins. Replace this to run programs as commands.\n");
+      }
     }
     // fprintf(stdout, "%d: ", lineNum);
   }
