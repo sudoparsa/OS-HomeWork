@@ -58,6 +58,7 @@ int cmd_pwd(tok_t arg[]) {
   size_t size = INPUT_STRING_SIZE+1;
   cwd = getcwd(cwd, size);
   printf("%s\n", cwd);
+  free(cwd);
   return 1;
 }
 
@@ -125,8 +126,27 @@ void add_process(process* p)
   p->prev = process;
 }
 
-int execute(char* path, tok_t* vars) {
-  return execv(path, vars);
+int execute(char* file_path, tok_t* vars) {
+  if (execv(file_path, vars) > 0) {
+    return 1;
+  }
+  // check PATH
+  const char* PATH = getenv("PATH");
+  if (PATH == NULL) {
+    printf("getenv returned NULL\n");
+    return -1;
+  }
+  for (char* c = strtok(PATH, ":"); c; c = strtok(NULL, ":")) {
+    char *file_address = malloc(INPUT_STRING_SIZE+1);
+    strcpy(file_address, c);
+    strcat(file_address, "/");
+    strcat(file_address, file_path);
+    if (execv(file_address, vars) > 0) {
+      return 1;
+    }
+    free(file_address);
+  }
+  return -1;
 }
 
 int create_process(tok_t* argv) {
@@ -139,8 +159,6 @@ int create_process(tok_t* argv) {
   } else if (cpid == 0) {
     return execute(argv[0], argv);
   }
-
-
   return 1;
 }
 
