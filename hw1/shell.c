@@ -7,7 +7,8 @@
 #include <termios.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #define FALSE 0
 #define TRUE 1
@@ -152,17 +153,17 @@ int execute(char* file_path, tok_t* vars, int argc) {
 int redirect(int argc, tok_t* argv) {
   if (argc < 3) return argc;
   if (strcmp(argv[argc - 2], "<") == 0) { // input
-    //int redirect_file = open(argv[argc - 1], "r");
-    //dup2(redirect_file, stdin);
-    FILE* redirect_file = freopen(argv[argc - 1], "r", stdin);
+    int redirect_file = open(argv[argc - 1], O_RDONLY);
+    dup2(redirect_file, STDIN_FILENO);
+    //FILE* redirect_file = freopen(argv[argc - 1], "r", stdin);
     argv[argc - 1] = NULL;
     argv[argc - 2] = NULL;
     return argc - 2;
   }
   if (strcmp(argv[argc - 2], ">") == 0) { // output
-    //int redirect_file = open(argv[argc - 1], "w");
-    //dup2(redirect_file, stdout);
-    FILE* redirect_file = freopen(argv[argc - 1], "w", stdout);
+    int redirect_file = open(argv[argc - 1], O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+    dup2(redirect_file, STDOUT_FILENO);
+    //FILE* redirect_file = freopen(argv[argc - 1], "w", stdout);
     argv[argc - 1] = NULL;
     argv[argc - 2] = NULL;
     return argc - 2;
