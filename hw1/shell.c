@@ -126,7 +126,7 @@ void add_process(process* p)
   p->prev = process;
 }
 
-int execute(char* file_path, tok_t* vars) {
+int execute(char* file_path, tok_t* vars, int argc) {
   if (execv(file_path, vars) > 0) {
     return 1;
   }
@@ -148,15 +148,34 @@ int execute(char* file_path, tok_t* vars) {
   return -1;
 }
 
+int redirect(int argc, tok_t* argv) {
+  if (argc < 3) return argc;
+  if (strcmp(argv[argc - 2], "<") == 0) { // input
+    FILE* redirect_file = freopen(argv[argc - 1], "r", stdin);
+    argv[argc - 1] = NULL;
+    argv[argc - 2] = NULL;
+    return argc - 2;
+  }
+  if (strcmp(argv[argc - 2], ">") == 0) { // output
+    FILE* redirect_file = freopen(argv[argc - 1], "w", stdout);
+    argv[argc - 1] = NULL;
+    argv[argc - 2] = NULL;
+    return argc - 2;
+  }
+  return argc;
+}
+
 int create_process(tok_t* argv) {
   if (argv == NULL || argv[0] == NULL) {
     return -1;
   }
+  int argc = countToks(argv);
   int cpid = fork();
   if (cpid > 0) {
     wait(0);
   } else if (cpid == 0) {
-    return execute(argv[0], argv);
+    argc = redirect(argc, argv);
+    exit(execute(argv[0], argv, argc));
   }
   return 1;
 }
