@@ -155,6 +155,7 @@ int redirect(int argc, tok_t* argv) {
   if (strcmp(argv[argc - 2], "<") == 0) { // input
     int redirect_file = open(argv[argc - 1], O_RDONLY);
     dup2(redirect_file, STDIN_FILENO);
+    close(redirect_file);
     //FILE* redirect_file = freopen(argv[argc - 1], "r", stdin);
     argv[argc - 1] = NULL;
     argv[argc - 2] = NULL;
@@ -163,6 +164,7 @@ int redirect(int argc, tok_t* argv) {
   if (strcmp(argv[argc - 2], ">") == 0) { // output
     int redirect_file = open(argv[argc - 1], O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
     dup2(redirect_file, STDOUT_FILENO);
+    close(redirect_file);
     //FILE* redirect_file = freopen(argv[argc - 1], "w", stdout);
     argv[argc - 1] = NULL;
     argv[argc - 2] = NULL;
