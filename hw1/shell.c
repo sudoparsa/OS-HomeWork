@@ -151,28 +151,6 @@ int execute(char* file_path, tok_t* vars, int argc) {
 }
 
 int redirect(int argc, tok_t* argv) {
-  if (argc < 3) return argc;
-  if (strcmp(argv[argc - 2], "<") == 0) { // input
-    int redirect_file = open(argv[argc - 1], O_RDONLY);
-    dup2(redirect_file, STDIN_FILENO);
-    //FILE* redirect_file = freopen(argv[argc - 1], "r", stdin);
-    argv[argc - 1] = NULL;
-    argv[argc - 2] = NULL;
-    return argc - 2;
-  }
-  if (strcmp(argv[argc - 2], ">") == 0) { // output
-    int redirect_file = open(argv[argc - 1], O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
-    dup2(redirect_file, STDOUT_FILENO);
-    //FILE* redirect_file = freopen(argv[argc - 1], "w", stdout);
-    argv[argc - 1] = NULL;
-    argv[argc - 2] = NULL;
-    return argc - 2;
-  }
-  return argc;
-}
-
-int redirect2(int argc, tok_t* argv) {
-  int in_index = isDirectTok(argv, "<");
   int out_index = isDirectTok(argv, ">");
   if (out_index != -1) {
     int redirect_file = open(argv[out_index + 1], O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
@@ -184,6 +162,7 @@ int redirect2(int argc, tok_t* argv) {
     argv[i] = NULL;
     argc -= 2;
   }
+  int in_index = isDirectTok(argv, "<");
   if (in_index != -1) {
     int redirect_file = open(argv[in_index + 1], O_RDONLY);
     dup2(redirect_file, STDIN_FILENO);
@@ -206,7 +185,7 @@ int create_process(tok_t* argv) {
   if (cpid > 0) {
     wait(0);
   } else if (cpid == 0) {
-    argc = redirect2(argc, argv);
+    argc = redirect(argc, argv);
     exit(execute(argv[0], argv, argc));
   }
   return 1;
