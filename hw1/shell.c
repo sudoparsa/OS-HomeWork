@@ -209,12 +209,10 @@ int create_process(tok_t* argv) {
   }
   int cpid = fork();
   if (cpid > 0) {
-    if (run_in_background == TRUE) {
-      tcsetpgrp(shell_terminal, shell_pgid);
-    } else {
+    if (run_in_background == FALSE) {
       wait(0);
-      tcsetpgrp(shell_terminal, shell_pgid);
     }
+    tcsetpgrp(shell_terminal, shell_pgid);
   } else if (cpid == 0) {
     setpgid(getppid(), getppid());
     if (run_in_background == FALSE && tcgetpgrp(shell_terminal) == shell_pgid) {
