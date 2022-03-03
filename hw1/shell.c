@@ -31,6 +31,8 @@ int cmd_pwd(tok_t arg[]);
 
 int cmd_cd(tok_t arg[]);
 
+int cmd_wait(tok_t arg[]);
+
 
 /* Command Lookup table */
 typedef int cmd_fun_t (tok_t args[]); /* cmd functions take token array and return int */
@@ -45,6 +47,7 @@ fun_desc_t cmd_table[] = {
   {cmd_quit, "quit", "quit the command shell"},
   {cmd_pwd, "pwd", "print name of current/working directory"},
   {cmd_cd, "cd", "change directory"},
+  {cmd_wait, "wait", "wait until all background jobs have terminated"},
 };
 
 int cmd_help(tok_t arg[]) {
@@ -66,6 +69,13 @@ int cmd_pwd(tok_t arg[]) {
 
 int cmd_cd(tok_t arg[]) {
   chdir(arg[0]);
+  return 1;
+}
+
+int cmd_wait(tok_t arg[]) {
+  while (waitpid(-1, NULL, 0) > 0) {
+    ;
+  }
   return 1;
 }
 
@@ -181,9 +191,19 @@ int create_process(tok_t* argv) {
     return -1;
   }
   int argc = countToks(argv);
+  int run_in_background = strcmp(argv[argc - 1], "&") == 0 ? TRUE : FALSE;
+  if (run_in_background == TRUE) {
+    argv[argc - 1] = NULL;
+    argc--;
+  }
   int cpid = fork();
   if (cpid > 0) {
-    wait(0);
+    if (run_in_background == TRUE) {
+      ;
+    }
+    else {
+      wait(0);
+    }
   } else if (cpid == 0) {
     argc = redirect(argc, argv);
     exit(execute(argv[0], argv, argc));
