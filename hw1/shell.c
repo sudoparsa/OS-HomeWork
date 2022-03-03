@@ -87,6 +87,24 @@ int lookup(char cmd[]) {
   return -1;
 }
 
+void default_signals() {
+  signal(SIGINT, SIG_DFL);
+  signal(SIGQUIT, SIG_DFL);
+  signal(SIGTSTP, SIG_DFL);
+  signal(SIGTTIN, SIG_DFL);
+  signal(SIGTTOU, SIG_DFL);
+  signal(SIGCHLD, SIG_DFL);
+}
+
+void ignore_signals() {
+  signal(SIGINT, SIG_IGN);
+  signal(SIGQUIT, SIG_IGN);
+  signal(SIGTSTP, SIG_IGN);
+  signal(SIGTTIN, SIG_IGN);
+  signal(SIGTTOU, SIG_IGN);
+  signal(SIGCHLD, SIG_IGN);
+}
+
 void init_shell()
 {
   /* Check if we are running interactively */
@@ -112,17 +130,10 @@ void init_shell()
     /* Take control of the terminal */
     tcsetpgrp(shell_terminal, shell_pgid);
     tcgetattr(shell_terminal, &shell_tmodes);
+
+    ignore_signals();
   }
   /** YOUR CODE HERE */
-  // create first process
-  first_process = (process *) malloc(sizeof(process));;
-  first_process->pid = getpid();
-  first_process->completed = 0;
-  first_process->stopped = 0;
-  first_process->background = 0;
-  first_process->status = 0;
-  first_process->next = NULL;
-  first_process->prev = NULL;
 }
 
 /**
@@ -198,13 +209,11 @@ int create_process(tok_t* argv) {
   }
   int cpid = fork();
   if (cpid > 0) {
-    if (run_in_background == TRUE) {
-      ;
-    }
-    else {
+    if (run_in_background == FALSE) {
       wait(0);
     }
   } else if (cpid == 0) {
+    default_signals();
     argc = redirect(argc, argv);
     exit(execute(argv[0], argv, argc));
   }
