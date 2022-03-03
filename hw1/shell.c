@@ -210,7 +210,7 @@ int create_process(tok_t* argv) {
   int cpid = fork();
   if (cpid > 0) {
     if (run_in_background == FALSE) {
-      wait(0);
+      waitpid(cpid, NULL, WUNTRACED);
     }
     tcsetpgrp(shell_terminal, shell_pgid);
   } else if (cpid == 0) {
