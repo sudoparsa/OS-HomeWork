@@ -1,0 +1,40 @@
+
+                   ____                  
+                _.' :  `._               
+            .-.'`.  ;   .'`.-.           
+   __      / : ___ ;  /___ ;       __  
+ ,'_ ""--.:__;".-.";: :".-.":__;.--"" _`,
+ :' `.t""--.. '<@.`;_  ',@>` ..--""j.' `;
+      `:-.._J '-.-'L__ `-- ' L_..-;'     
+        "-.__ ;  .-"  "-.  : __.-"       
+            L ' /.------. ' J           
+             "-.   "--"   .-"            
+            __.l"-:_JL_;-";.__           
+         .-j/'.;  ;""""  / .'"-.        
+       .' /:`. "-.:     .-" .';  `.      
+    .-"  / ;  "-. "-..-" .-"  :    "-.   
+ .+"-.  : :      "-.__.-"      ;-._     
+ ;   `.; ;                    : : "+. ; 
+
+
+Date: Sat Apr 09 2022 22:08:13 GMT+0100 (British Summer Time)
+httpserver
+	test file integrity ... FAIL [0/1]
+	test request metadata ... FAIL [0/1]
+	test large file ... FAIL [0/1]
+	test nonexistent file ... FAIL [0/1]
+	test status header ... PASS [1/1]
+	test default file ... FAIL [0/1]
+	test directory list ... FAIL [0/1]
+	test cutting connection ... FAIL [0/1]
+
+httpproxy
+	test file download through proxy ... FAIL [0/1]
+	test large file download through proxy ... FAIL [0/1]
+	test multi-threading (5 threads) ... FAIL [0/1]
+	test multi-threading (10 threads) ... FAIL [0/1]
+	test pass-through proxy ... FAIL [0/1]
+
+-------------------
+score : 1/13
+:)epoch: 1649538656
