@@ -31,6 +31,18 @@ char *server_files_directory;
 char *server_proxy_hostname;
 int server_proxy_port;
 
+#define MAX_FILE_SIZE 128
+#define BUFFER_SIZE 8192
+
+void send_file(int fd1, int fd2) {
+  void *buffer = malloc((BUFFER_SIZE) * sizeof(char));
+  size_t size;
+  while ((size = read(fd2, buffer, BUFFER_SIZE)) > 0) {
+    http_send_data(fd1, buffer, size);
+  }
+  free(buffer);
+}
+
 /*
  * Serves the contents the file stored at `path` to the client socket `fd`.
  * It is the caller's reponsibility to ensure that the file stored at `path` exists.
@@ -39,15 +51,22 @@ int server_proxy_port;
  * ATTENTION: Be careful to optimize your code. Judge is
  *            sesnsitive to time-out errors.
  */
-void serve_file(int fd, char *path) {
+void serve_file(int fd, char *path, struct stat *st) {
 
   http_start_response(fd, 200);
   http_send_header(fd, "Content-Type", http_get_mime_type(path));
-  http_send_header(fd, "Content-Length", "0"); // Change this too
+
+  long size = st->st_size;
+  char *file_size = malloc(MAX_FILE_SIZE * sizeof(char));
+  sprintf(file_size, "%ld", size);
+  http_send_header(fd, "Content-Length", file_size); // Change this too
+
   http_end_headers(fd);
 
-  /* TODO: PART 1 Bullet 2 */
-
+  int file = open(path, O_RDONLY);
+  send_file(fd, file);
+  free(file_size);
+  close(file);
 }
 
 void serve_directory(int fd, char *path) {
@@ -57,6 +76,12 @@ void serve_directory(int fd, char *path) {
 
   /* TODO: PART 1 Bullet 3,4 */
 
+}
+
+void serve_404_not_found(int fd) {
+  http_start_response(fd, 404);
+  http_send_header(fd, "Content-Type", "text/html");
+  http_end_headers(fd);
 }
 
 
@@ -110,7 +135,16 @@ void handle_files_request(int fd) {
    * Feel FREE to delete/modify anything on this function.
    */
 
-  http_start_response(fd, 200);
+  struct stat st;
+  int return_value = stat(path, &st);
+
+  if (return_value == 0) {
+    serve_file(fd, path, &st);
+  } else {
+    serve_404_not_found(fd);
+  }
+
+  /*http_start_response(fd, 200);
   http_send_header(fd, "Content-Type", "text/html");
   http_end_headers(fd);
   http_send_string(fd,
@@ -118,7 +152,7 @@ void handle_files_request(int fd) {
       "<h1>Welcome to httpserver!</h1>"
       "<hr>"
       "<p>Nothing's here yet.</p>"
-      "</center>");
+      "</center>");*/
 
   close(fd);
   return;
@@ -275,8 +309,8 @@ void signal_callback_handler(int signum) {
 }
 
 char *USAGE =
-  "Usage: ./httpserver --files www_directory/ --port 8000 [--num-threads 5]\n"
-  "       ./httpserver --proxy inst.eecs.berkeley.edu:80 --port 8000 [--num-threads 5]\n";
+  "Usage: ./httpserver --files files/ [--port 8000 --num-threads 5]\n"
+  "       ./httpserver --proxy ce.sharif.edu:80 [--port 8000 --num-threads 5]\n";
 
 void exit_with_usage() {
   fprintf(stderr, "%s", USAGE);
