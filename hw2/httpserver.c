@@ -119,10 +119,9 @@ void handle_files_request(int fd) {
   }
 
   /* Remove beginning `./` */
-  char *path = malloc(2 + strlen(request->path) + 1);
-  path[0] = '.';
-  path[1] = '/';
-  memcpy(path + 2, request->path, strlen(request->path) + 1);
+  char *path = malloc(strlen(server_files_directory) + strlen(request->path));
+  strcpy(path, server_files_directory);
+  strcat(path, request->path);
 
   /* 
    * TODO: First is to serve files. If the file given by `path` exists,
