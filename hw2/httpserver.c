@@ -40,14 +40,15 @@ typedef struct proxy_thread_status {
   int dst_fd;
   pthread_cond_t *cond;
   int alive;
+  int *finished;
 } proxy_thread_status;
 
 
-void send_fd(int fd1, int fd2) {
-  void *buffer = malloc((BUFFER_SIZE) * sizeof(char));
+void send_fd(int dst_fd, int src_fd) {
+  void *buffer = malloc(BUFFER_SIZE);
   size_t size;
-  while ((size = read(fd2, buffer, BUFFER_SIZE)) > 0) {
-    http_send_data(fd1, buffer, size);
+  while ((size = read(src_fd, buffer, BUFFER_SIZE)) > 0) {
+    http_send_data(dst_fd, buffer, size);
   }
   free(buffer);
 }
@@ -190,11 +191,22 @@ void handle_files_request(int fd) {
 }
 
 void *serve_proxy_thread(void *args) {
-  struct proxy_thread_status *status = (proxy_thread_status *) args;
+  proxy_thread_status *status = (proxy_thread_status *) args;
 
-  send_fd(status->dst_fd, status->src_fd); 
+  printf("%d %d\n", status->src_fd, status->dst_fd);
+  //send_fd(status->dst_fd, status->src_fd);
+  char *buffer = malloc(BUFFER_SIZE);
+  size_t size;
+  while ((size = read(status->src_fd, buffer, BUFFER_SIZE - 1)) > 0 && !(*status->finished)) {
+    printf("heeeeeeeeeeeeeeeeeeeeeeey %ld\n", size);
+    http_send_data(status->dst_fd, buffer, size);
+  }
+  free(buffer);
+
+  printf("hey %d %d\n", status->src_fd, status->dst_fd); 
 
   status->alive = 0;
+  *(status->finished) = 1;
   pthread_cond_signal(status->cond);
   return NULL;
 }
@@ -262,36 +274,44 @@ void handle_proxy_request(int fd) {
   /* 
   * TODO: Your solution for task 3 belongs here! 
   */
-  struct proxy_thread_status *proxy_request = malloc(sizeof(proxy_thread_status));
-  struct proxy_thread_status *proxy_response = malloc(sizeof(proxy_thread_status));
-  pthread_mutex_t mutex;
-  pthread_cond_t cond;
-  pthread_mutex_init(&mutex, NULL);
-  pthread_cond_init(&cond, NULL);
+  proxy_thread_status *proxy_request = malloc(sizeof(proxy_thread_status));
+  proxy_thread_status *proxy_response = malloc(sizeof(proxy_thread_status));
+  pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+  pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+  int finished = 0;
 
   proxy_request->src_fd = fd;
   proxy_request->dst_fd = target_fd;
   proxy_request->cond = &cond;
   proxy_request->alive = 1;
+  proxy_request->finished = &finished;
 
   proxy_response->src_fd = target_fd;
   proxy_response->dst_fd = fd;
   proxy_response->cond = &cond;
   proxy_response->alive = 1;
+  proxy_response->finished = &finished;
 
   pthread_t proxy_threads[2];
-  pthread_create(&proxy_threads[0], NULL, serve_proxy_thread, proxy_request);
-  pthread_create(&proxy_threads[1], NULL, serve_proxy_thread, proxy_response);
+  pthread_create(proxy_threads, NULL, serve_proxy_thread, proxy_request);
+  pthread_create(proxy_threads + 1, NULL, serve_proxy_thread, proxy_response);
 
-  while (proxy_request->alive && proxy_response->alive) {
+  while (!finished) {
     pthread_cond_wait(&cond, &mutex);
   }
 
-  close(target_fd);
-  close(fd);
-
   pthread_mutex_destroy(&mutex);
   pthread_cond_destroy(&cond);
+
+  pthread_cancel(proxy_threads[0]);
+  pthread_cancel(proxy_threads[1]);
+
+  free(proxy_request);
+  free(proxy_response);
+
+  close(target_fd);
+  close(fd);
+  printf("salam\n");
 }
 
 void *serve_thread(void *args) {
