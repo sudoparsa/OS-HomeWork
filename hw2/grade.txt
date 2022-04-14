@@ -17,7 +17,7 @@
  ;   `.; ;                    : : "+. ; 
 
 
-Date: Thu Apr 14 2022 20:18:30 GMT+0100 (British Summer Time)
+Date: Thu Apr 14 2022 20:24:53 GMT+0100 (British Summer Time)
 httpserver
 	test file integrity ... PASS [1/1]
 	test request metadata ... PASS [1/1]
@@ -32,9 +32,9 @@ httpproxy
 	test file download through proxy ... PASS [1/1]
 	test large file download through proxy ... PASS [1/1]
 	test multi-threading (5 threads) ... FAIL [0/1]
-	test multi-threading (10 threads) ... FAIL [0/1]
+	test multi-threading (10 threads) ... PASS [1/1]
 	test pass-through proxy ... PASS [1/1]
 
 -------------------
-score : 11/13
-:)epoch: 1649963930
+score : 12/13
+:)epoch: 1649964306
