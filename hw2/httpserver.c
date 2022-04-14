@@ -257,9 +257,6 @@ void handle_proxy_request(int fd) {
 
   }
 
-  /* 
-  * TODO: Your solution for task 3 belongs here! 
-  */
   proxy_thread_status *proxy_request = malloc(sizeof(proxy_thread_status));
   proxy_thread_status *proxy_response = malloc(sizeof(proxy_thread_status));
   pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -282,6 +279,9 @@ void handle_proxy_request(int fd) {
   while (proxy_request->alive && proxy_response->alive) {
     pthread_cond_wait(&cond, &mutex);
   }
+
+  pthread_cancel(proxy_threads[0]);
+  pthread_cancel(proxy_threads[1]);
 
   pthread_mutex_destroy(&mutex);
   pthread_cond_destroy(&cond);
