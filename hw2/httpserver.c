@@ -395,8 +395,8 @@ void serve_forever(int *socket_number, void (*request_handler)(int)) {
      request_handler(client_socket_number);
      close(client_socket_number);
     } else {
-        wq_push(&work_queue, client_socket_number);
-        }
+      wq_push(&work_queue, client_socket_number);
+    }
 
   }
 
