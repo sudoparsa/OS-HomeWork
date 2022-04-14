@@ -175,8 +175,8 @@ void handle_files_request(int fd) {
   } else {
     serve_404_not_found(fd);
   }
-  free(path);
 
+  free(path);
   close(fd);
   return;
 }
@@ -246,11 +246,22 @@ void handle_proxy_request(int fd) {
   */
 }
 
+void *serve_thread(void *args) {
+  void (*request_handler)(int) = args;
+  while (1) {
+    int fd = wq_pop(&work_queue);
+		request_handler(fd);
+		close(fd);
+  }
+}
+
 
 void init_thread_pool(int num_threads, void (*request_handler)(int)) {
-  /*
-   * TODO: Part of your solution for Task 2 goes here!
-   */
+  wq_init(&work_queue);
+  pthread_t thread_pool[num_threads + 1];
+  for (int i = 0; i < num_threads + 1; i++) {
+    pthread_create(&(thread_pool[i]), NULL, serve_thread, request_handler);
+  }
 }
 
 /*
@@ -311,10 +322,12 @@ void serve_forever(int *socket_number, void (*request_handler)(int)) {
         client_address.sin_port);
 
     // TODO: Change me?
-    request_handler(client_socket_number);
-    close(client_socket_number);
+    /*request_handler(client_socket_number);
+    close(client_socket_number);*/
 
-    printf("Accepted connection from %s on port %d\n",
+    wq_push(&work_queue, client_socket_number);
+
+    printf("Closed connection from %s on port %d\n",
         inet_ntoa(client_address.sin_addr),
         client_address.sin_port);
   }
