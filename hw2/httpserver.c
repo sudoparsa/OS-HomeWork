@@ -296,7 +296,7 @@ void handle_proxy_request(int fd) {
   pthread_create(proxy_threads, NULL, serve_proxy_thread, proxy_request);
   pthread_create(proxy_threads + 1, NULL, serve_proxy_thread, proxy_response);
 
-  while (!finished) {
+  while (proxy_request->alive && proxy_response->alive) {
     pthread_cond_wait(&cond, &mutex);
   }
 
@@ -311,7 +311,6 @@ void handle_proxy_request(int fd) {
 
   close(target_fd);
   close(fd);
-  printf("salam\n");
 }
 
 void *serve_thread(void *args) {
@@ -326,9 +325,9 @@ void *serve_thread(void *args) {
 
 void init_thread_pool(int num_threads, void (*request_handler)(int)) {
   wq_init(&work_queue);
-  pthread_t thread_pool[num_threads + 1];
-  for (int i = 0; i < num_threads + 1; i++) {
-    pthread_create(&thread_pool[i], NULL, serve_thread, request_handler);
+  pthread_t thread_pool[num_threads];
+  for (int i = 0; i < num_threads; i++) {
+    pthread_create(thread_pool + i, NULL, serve_thread, request_handler);
   }
 }
 
@@ -391,12 +390,12 @@ void serve_forever(int *socket_number, void (*request_handler)(int)) {
 
     wq_push(&work_queue, client_socket_number);
 
-    /*if (num_threads == 0) {
+    if (num_threads == 0) {
      request_handler(client_socket_number);
      close(client_socket_number);
     } else {
       wq_push(&work_queue, client_socket_number);
-    }*/
+    }
 
   }
 
