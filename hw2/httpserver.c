@@ -33,6 +33,7 @@ int server_proxy_port;
 
 #define MAX_FILE_SIZE 128
 #define BUFFER_SIZE 8192
+#define MAX_STRING_BUFFER_SIZE 8192
 
 void send_file(int fd1, int fd2) {
   void *buffer = malloc((BUFFER_SIZE) * sizeof(char));
@@ -69,13 +70,41 @@ void serve_file(int fd, char *path, struct stat *st) {
   close(file);
 }
 
+void send_index(int fd, char *path) {
+  char *index_path = malloc(strlen(path) + strlen("/index.html"));
+  strcpy(index_path, path);
+  strcat(index_path, "/index.html");
+  int index_fd = open(index_path, O_RDONLY);
+  free(index_path);
+  send_file(fd, index_fd);
+  close(index_fd);
+}
+
 void serve_directory(int fd, char *path) {
   http_start_response(fd, 200);
   http_send_header(fd, "Content-Type", http_get_mime_type(".html"));
   http_end_headers(fd);
 
-  /* TODO: PART 1 Bullet 3,4 */
-
+  DIR *dir = opendir(path);
+  struct dirent *dfile;
+  char *string_buffer = malloc(MAX_STRING_BUFFER_SIZE);
+  while ((dfile = readdir(dir)) != NULL)
+  {
+    if (strcmp(dfile->d_name, "index.html") == 0) {
+      send_index(fd, path);
+      free(string_buffer);
+      return;
+    } else {
+      int buffer_size = strlen("<a href=./></a><br>\n") + strlen(dfile->d_name)*2 + 1;
+      char *buffer = malloc(buffer_size);
+      sprintf(buffer, "<a href=./%s>%s</a><br>\n", dfile->d_name, dfile->d_name);
+      strcat(string_buffer, buffer);
+      free(buffer);
+    }
+  }
+  http_send_string(fd, string_buffer);
+  free(string_buffer);
+  closedir(dir);
 }
 
 void serve_404_not_found(int fd) {
@@ -138,10 +167,15 @@ void handle_files_request(int fd) {
   int return_value = stat(path, &st);
 
   if (return_value == 0) {
-    serve_file(fd, path, &st);
+    if (S_ISREG(st.st_mode)) {
+      serve_file(fd, path, &st);
+    } else {
+      serve_directory(fd, path);
+    }
   } else {
     serve_404_not_found(fd);
   }
+  free(path);
 
   close(fd);
   return;
