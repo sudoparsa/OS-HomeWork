@@ -316,7 +316,7 @@ void init_thread_pool(int num_threads, void (*request_handler)(int)) {
   wq_init(&work_queue);
   pthread_t thread_pool[num_threads];
   for (int i = 0; i < num_threads; i++) {
-    pthread_create(thread_pool + i, NULL, serve_thread, request_handler);
+    pthread_create(&thread_pool[i], NULL, serve_thread, request_handler);
   }
 }
 
@@ -377,7 +377,6 @@ void serve_forever(int *socket_number, void (*request_handler)(int)) {
         inet_ntoa(client_address.sin_addr),
         client_address.sin_port);
 
-    wq_push(&work_queue, client_socket_number);
 
     if (num_threads == 0) {
      request_handler(client_socket_number);
