@@ -193,17 +193,13 @@ void handle_files_request(int fd) {
 void *serve_proxy_thread(void *args) {
   proxy_thread_status *status = (proxy_thread_status *) args;
 
-  printf("%d %d\n", status->src_fd, status->dst_fd);
-  //send_fd(status->dst_fd, status->src_fd);
-  char *buffer = malloc(BUFFER_SIZE);
+  send_fd(status->dst_fd, status->src_fd);
+  /*char *buffer = malloc(BUFFER_SIZE);
   size_t size;
   while ((size = read(status->src_fd, buffer, BUFFER_SIZE - 1)) > 0 && !(*status->finished)) {
-    printf("heeeeeeeeeeeeeeeeeeeeeeey %ld\n", size);
     http_send_data(status->dst_fd, buffer, size);
   }
-  free(buffer);
-
-  printf("hey %d %d\n", status->src_fd, status->dst_fd); 
+  free(buffer);*/
 
   status->alive = 0;
   *(status->finished) = 1;
@@ -283,20 +279,18 @@ void handle_proxy_request(int fd) {
   proxy_request->src_fd = fd;
   proxy_request->dst_fd = target_fd;
   proxy_request->cond = &cond;
-  proxy_request->alive = 1;
   proxy_request->finished = &finished;
 
   proxy_response->src_fd = target_fd;
   proxy_response->dst_fd = fd;
   proxy_response->cond = &cond;
-  proxy_response->alive = 1;
   proxy_response->finished = &finished;
 
   pthread_t proxy_threads[2];
   pthread_create(proxy_threads, NULL, serve_proxy_thread, proxy_request);
   pthread_create(proxy_threads + 1, NULL, serve_proxy_thread, proxy_response);
 
-  while (proxy_request->alive && proxy_response->alive) {
+  while (!finished) {
     pthread_cond_wait(&cond, &mutex);
   }
 
