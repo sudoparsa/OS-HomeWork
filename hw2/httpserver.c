@@ -191,12 +191,14 @@ void handle_files_request(int fd) {
 
 void *serve_proxy_thread(void *args) {
   proxy_thread_status *status = (proxy_thread_status *) args;
-  char *buffer = malloc(BUFFER_SIZE);
+  send_fd(status->dst_fd, status->src_fd);
+  /*char *buffer = malloc(BUFFER_SIZE);
   size_t size;
   while ((size = read(status->src_fd, buffer, BUFFER_SIZE - 1)) > 0 && !(*status->finished)) {
     http_send_data(status->dst_fd, buffer, size);
   }
-  free(buffer);
+  free(buffer);*/
+
   *(status->finished) = 1;
   pthread_cond_signal(status->cond);
   return NULL;
@@ -316,7 +318,7 @@ void init_thread_pool(int num_threads, void (*request_handler)(int)) {
   wq_init(&work_queue);
   pthread_t thread_pool[num_threads];
   for (int i = 0; i < num_threads; i++) {
-    pthread_create(&thread_pool[i], NULL, serve_thread, request_handler);
+    pthread_create(thread_pool + i, NULL, serve_thread, request_handler);
   }
 }
 
@@ -376,7 +378,6 @@ void serve_forever(int *socket_number, void (*request_handler)(int)) {
     printf("Received connection from %s on port %d\n",
         inet_ntoa(client_address.sin_addr),
         client_address.sin_port);
-
 
     if (num_threads == 0) {
      request_handler(client_socket_number);
