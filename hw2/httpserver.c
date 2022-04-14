@@ -39,7 +39,6 @@ typedef struct proxy_thread_status {
   int src_fd;
   int dst_fd;
   pthread_cond_t *cond;
-  int alive;
   int *finished;
 } proxy_thread_status;
 
@@ -192,16 +191,12 @@ void handle_files_request(int fd) {
 
 void *serve_proxy_thread(void *args) {
   proxy_thread_status *status = (proxy_thread_status *) args;
-
-  send_fd(status->dst_fd, status->src_fd);
-  /*char *buffer = malloc(BUFFER_SIZE);
+  char *buffer = malloc(BUFFER_SIZE);
   size_t size;
   while ((size = read(status->src_fd, buffer, BUFFER_SIZE - 1)) > 0 && !(*status->finished)) {
     http_send_data(status->dst_fd, buffer, size);
   }
-  free(buffer);*/
-
-  status->alive = 0;
+  free(buffer);
   *(status->finished) = 1;
   pthread_cond_signal(status->cond);
   return NULL;
