@@ -143,16 +143,6 @@ void handle_files_request(int fd) {
     serve_404_not_found(fd);
   }
 
-  /*http_start_response(fd, 200);
-  http_send_header(fd, "Content-Type", "text/html");
-  http_end_headers(fd);
-  http_send_string(fd,
-      "<center>"
-      "<h1>Welcome to httpserver!</h1>"
-      "<hr>"
-      "<p>Nothing's here yet.</p>"
-      "</center>");*/
-
   close(fd);
   return;
 }
