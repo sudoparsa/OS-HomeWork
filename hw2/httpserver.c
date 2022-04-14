@@ -39,7 +39,6 @@ typedef struct proxy_thread_status {
   int src_fd;
   int dst_fd;
   pthread_cond_t *cond;
-  int *finished;
   int alive;
 } proxy_thread_status;
 
@@ -193,7 +192,6 @@ void handle_files_request(int fd) {
 void *serve_proxy_thread(void *args) {
   proxy_thread_status *status = (proxy_thread_status *) args;
   send_fd(status->dst_fd, status->src_fd);
-  *(status->finished) = 1;
   status->alive = 0;
   pthread_cond_signal(status->cond);
   return NULL;
@@ -266,19 +264,16 @@ void handle_proxy_request(int fd) {
   proxy_thread_status *proxy_response = malloc(sizeof(proxy_thread_status));
   pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
   pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
-  int finished = 0;
 
   proxy_request->src_fd = fd;
   proxy_request->dst_fd = target_fd;
   proxy_request->cond = &cond;
   proxy_request->alive = 1;
-  proxy_request->finished = &finished;
 
   proxy_response->src_fd = target_fd;
   proxy_response->dst_fd = fd;
   proxy_response->cond = &cond;
   proxy_response->alive = 1;
-  proxy_response->finished = &finished;
 
   pthread_t proxy_threads[2];
   pthread_create(proxy_threads, NULL, serve_proxy_thread, proxy_request);
@@ -290,9 +285,6 @@ void handle_proxy_request(int fd) {
 
   pthread_mutex_destroy(&mutex);
   pthread_cond_destroy(&cond);
-
-  pthread_cancel(proxy_threads[0]);
-  pthread_cancel(proxy_threads[1]);
 
   free(proxy_request);
   free(proxy_response);
