@@ -35,7 +35,15 @@ int server_proxy_port;
 #define BUFFER_SIZE 8192
 #define MAX_STRING_BUFFER_SIZE 8192
 
-void send_file(int fd1, int fd2) {
+typedef struct proxy_thread_status {
+  int src_fd;
+  int dst_fd;
+  pthread_cond_t *cond;
+  int alive;
+} proxy_thread_status;
+
+
+void send_fd(int fd1, int fd2) {
   void *buffer = malloc((BUFFER_SIZE) * sizeof(char));
   size_t size;
   while ((size = read(fd2, buffer, BUFFER_SIZE)) > 0) {
@@ -60,12 +68,12 @@ void serve_file(int fd, char *path, struct stat *st) {
   long size = st->st_size;
   char *file_size = malloc(MAX_FILE_SIZE * sizeof(char));
   sprintf(file_size, "%ld", size);
-  http_send_header(fd, "Content-Length", file_size); // Change this too
+  http_send_header(fd, "Content-Length", file_size);
 
   http_end_headers(fd);
 
   int file = open(path, O_RDONLY);
-  send_file(fd, file);
+  send_fd(fd, file);
   free(file_size);
   close(file);
 }
@@ -76,7 +84,7 @@ void send_index(int fd, char *path) {
   strcat(index_path, "/index.html");
   int index_fd = open(index_path, O_RDONLY);
   free(index_path);
-  send_file(fd, index_fd);
+  send_fd(fd, index_fd);
   close(index_fd);
 }
 
@@ -181,6 +189,16 @@ void handle_files_request(int fd) {
   return;
 }
 
+void *serve_proxy_thread(void *args) {
+  struct proxy_thread_status *status = (proxy_thread_status *) args;
+
+  send_fd(status->dst_fd, status->src_fd); 
+
+  status->alive = 0;
+  pthread_cond_signal(status->cond);
+  return NULL;
+}
+
 
 /*
  * Opens a connection to the proxy target (hostname=server_proxy_hostname and
@@ -244,6 +262,36 @@ void handle_proxy_request(int fd) {
   /* 
   * TODO: Your solution for task 3 belongs here! 
   */
+  struct proxy_thread_status *proxy_request = malloc(sizeof(proxy_thread_status));
+  struct proxy_thread_status *proxy_response = malloc(sizeof(proxy_thread_status));
+  pthread_mutex_t mutex;
+  pthread_cond_t cond;
+  pthread_mutex_init(&mutex, NULL);
+  pthread_cond_init(&cond, NULL);
+
+  proxy_request->src_fd = fd;
+  proxy_request->dst_fd = target_fd;
+  proxy_request->cond = &cond;
+  proxy_request->alive = 1;
+
+  proxy_response->src_fd = target_fd;
+  proxy_response->dst_fd = fd;
+  proxy_response->cond = &cond;
+  proxy_response->alive = 1;
+
+  pthread_t proxy_threads[2];
+  pthread_create(&proxy_threads[0], NULL, serve_proxy_thread, proxy_request);
+  pthread_create(&proxy_threads[1], NULL, serve_proxy_thread, proxy_response);
+
+  while (proxy_request->alive && proxy_response->alive) {
+    pthread_cond_wait(&cond, &mutex);
+  }
+
+  close(target_fd);
+  close(fd);
+
+  pthread_mutex_destroy(&mutex);
+  pthread_cond_destroy(&cond);
 }
 
 void *serve_thread(void *args) {
@@ -260,7 +308,7 @@ void init_thread_pool(int num_threads, void (*request_handler)(int)) {
   wq_init(&work_queue);
   pthread_t thread_pool[num_threads + 1];
   for (int i = 0; i < num_threads + 1; i++) {
-    pthread_create(&(thread_pool[i]), NULL, serve_thread, request_handler);
+    pthread_create(&thread_pool[i], NULL, serve_thread, request_handler);
   }
 }
 
@@ -317,19 +365,12 @@ void serve_forever(int *socket_number, void (*request_handler)(int)) {
       continue;
     }
 
-    printf("Accepted connection from %s on port %d\n",
+    printf("Received connection from %s on port %d\n",
         inet_ntoa(client_address.sin_addr),
         client_address.sin_port);
-
-    // TODO: Change me?
-    /*request_handler(client_socket_number);
-    close(client_socket_number);*/
 
     wq_push(&work_queue, client_socket_number);
 
-    printf("Closed connection from %s on port %d\n",
-        inet_ntoa(client_address.sin_addr),
-        client_address.sin_port);
   }
 
   shutdown(*socket_number, SHUT_RDWR);
