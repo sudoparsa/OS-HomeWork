@@ -1,0 +1,15 @@
+I finished judging your code on 22-04-2022 at 13:58:34.
+
+Compile error...
+
+----------<BEGIN AUTO GENERATED OUTPUT>-----------
+
+There is an occurrence of 'malloc' in 'mm_alloc.h' which is not allowed! Remove it and then submit again.\nPlease note that you have to completely remove the usages; commenting them out won't solve the problem! Because we search the file like CTRL+F
+There is an occurrence of 'free' in 'mm_alloc.h' which is not allowed! Remove it and then submit again.\nPlease note that you have to completely remove the usages; commenting them out won't solve the problem! Because we search the file like CTRL+F
+There is an occurrence of 'free' in 'mm_alloc.c' which is not allowed! Remove it and then submit again.\nPlease note that you have to completely remove the usages; commenting them out won't solve the problem! Because we search the file like CTRL+F
+There is an occurrence of 'calloc' in 'mm_alloc.c' which is not allowed! Remove it and then submit again.\nPlease note that you have to completely remove the usages; commenting them out won't solve the problem! Because we search the file like CTRL+F
+There is an occurrence of 'realloc' in 'mm_alloc.c' which is not allowed! Remove it and then submit again.\nPlease note that you have to completely remove the usages; commenting them out won't solve the problem! Because we search the file like CTRL+F
+make: *** [Makefile:20: hard] Error 1
+
+-----------<END AUTO GENERATED OUTPUT>------------
+Your final grade is: 0/100.0epoch: 1650635914
