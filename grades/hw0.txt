@@ -1,0 +1,5 @@
+ID: 98109583
+Grade: 98.2
+Delay(hours): 22
+Penalty: 0%
+Final Grade: 98.2
