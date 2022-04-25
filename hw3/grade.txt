@@ -1,4 +1,4 @@
-I finished judging your code on 25-04-2022 at 14:09:53.
+I finished judging your code on 25-04-2022 at 14:16:38.
 
 I ran your code on each test case separately! You can see the results below:
 
@@ -44,14 +44,7 @@ I guess fusion is not working...
 
 
 ================================================================================================================
-Test 5: Split block simple test --> Runtime error occurred (Exit code: 1)
-Although you got no points from this test, below is the output of the test (STDOUT):
-----------<BEGIN AUTO GENERATED OUTPUT>-----------
-
-Ok I just assured that you couldn't allocated 800 GB.
-Apparently Split block is not working
-
------------<END AUTO GENERATED OUTPUT>------------
+Test 5: Split block simple test --> OK! 7.5 points; Afarin!!!
 ================================================================================================================
 
 
@@ -68,14 +61,7 @@ You passed the first step...
 
 
 ================================================================================================================
-Test 7: A combination of fusion and split block --> Runtime error occurred (Exit code: 1)
-Although you got no points from this test, below is the output of the test (STDOUT):
-----------<BEGIN AUTO GENERATED OUTPUT>-----------
-
-Ok I just assured that you couldn't allocated 800 GB.
-Step 3 failed: I guess split block isn't working properly
-
------------<END AUTO GENERATED OUTPUT>------------
+Test 7: A combination of fusion and split block --> OK! 25 points; Afarin!!!
 ================================================================================================================
 
 
@@ -90,11 +76,12 @@ Although you got no points from this test, below is the output of the test (STDO
 
 
 ================================================================================================================
-Test 9: Realloc complicated test --> Runtime error occurred (Exit code: -11)
+Test 9: Realloc complicated test --> Runtime error occurred (Exit code: 1)
 Although you got no points from this test, below is the output of the test (STDOUT):
 ----------<BEGIN AUTO GENERATED OUTPUT>-----------
 
 Ok I just assured that you couldn't allocated 800 GB.
+You didn't preserve data in realloc (2)
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
@@ -108,8 +95,9 @@ Although you got no points from this test, below is the output of the test (STDO
 Ok you have allocated the array so far.
 Your answer is correct.
 Now we're gonna test with some reallocs!
+The first step is ok!
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
 
-Your final grade is: 4.5/100.0epoch: 1650895793
+Your final grade is: 37.0/100.0epoch: 1650896199
