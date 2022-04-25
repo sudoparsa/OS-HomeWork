@@ -1,4 +1,4 @@
-I finished judging your code on 25-04-2022 at 12:49:32.
+I finished judging your code on 25-04-2022 at 13:54:05.
 
 I ran your code on each test case separately! You can see the results below:
 
@@ -7,46 +7,49 @@ Test 1: Simple test of alloc and free --> Runtime error occurred (Exit code: -11
 Although you got no points from this test, below is the output of the test (STDOUT):
 ----------<BEGIN AUTO GENERATED OUTPUT>-----------
 
+Malloc didn't crash!
+Malloc first step is ok!
+A simple cmp is ok.
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
 
 
 ================================================================================================================
-Test 2: Test of exceptional cases --> Runtime error occurred (Exit code: -11)
+Test 2: Test of exceptional cases --> Runtime error occurred (Exit code: 1)
 Although you got no points from this test, below is the output of the test (STDOUT):
 ----------<BEGIN AUTO GENERATED OUTPUT>-----------
 
+It seems you haven't been careful enough...
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
 
 
 ================================================================================================================
-Test 3: Fusion simple test --> Runtime error occurred (Exit code: -11)
+Test 3: Fusion simple test --> OK! 4.5 points; Afarin!!!
+================================================================================================================
+
+
+================================================================================================================
+Test 4: Fusion complicated test --> Runtime error occurred (Exit code: 1)
 Although you got no points from this test, below is the output of the test (STDOUT):
 ----------<BEGIN AUTO GENERATED OUTPUT>-----------
 
+Ok I just assured that you couldn't allocated 800 GB.
+I guess fusion is not working...
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
 
 
 ================================================================================================================
-Test 4: Fusion complicated test --> Runtime error occurred (Exit code: -11)
+Test 5: Split block simple test --> Runtime error occurred (Exit code: 1)
 Although you got no points from this test, below is the output of the test (STDOUT):
 ----------<BEGIN AUTO GENERATED OUTPUT>-----------
 
-
------------<END AUTO GENERATED OUTPUT>------------
-================================================================================================================
-
-
-================================================================================================================
-Test 5: Split block simple test --> Runtime error occurred (Exit code: -11)
-Although you got no points from this test, below is the output of the test (STDOUT):
-----------<BEGIN AUTO GENERATED OUTPUT>-----------
-
+Ok I just assured that you couldn't allocated 800 GB.
+Apparently Split block is not working
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
@@ -57,16 +60,20 @@ Test 6: Test large amount of data --> Runtime error occurred (Exit code: -11)
 Although you got no points from this test, below is the output of the test (STDOUT):
 ----------<BEGIN AUTO GENERATED OUTPUT>-----------
 
+Ok I just assured that you couldn't allocated 800 GB.
+You passed the first step...
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
 
 
 ================================================================================================================
-Test 7: A combination of fusion and split block --> Runtime error occurred (Exit code: -11)
+Test 7: A combination of fusion and split block --> Runtime error occurred (Exit code: 1)
 Although you got no points from this test, below is the output of the test (STDOUT):
 ----------<BEGIN AUTO GENERATED OUTPUT>-----------
 
+Ok I just assured that you couldn't allocated 800 GB.
+Step 3 failed: I guess split block isn't working properly
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
@@ -83,10 +90,12 @@ Although you got no points from this test, below is the output of the test (STDO
 
 
 ================================================================================================================
-Test 9: Realloc complicated test --> Runtime error occurred (Exit code: -11)
+Test 9: Realloc complicated test --> Runtime error occurred (Exit code: 1)
 Although you got no points from this test, below is the output of the test (STDOUT):
 ----------<BEGIN AUTO GENERATED OUTPUT>-----------
 
+Ok I just assured that you couldn't allocated 800 GB.
+You didn't zero data in realloc
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
@@ -97,8 +106,12 @@ Test 10: Two dimensional array with arithmetic calculations on a real-world prob
 Although you got no points from this test, below is the output of the test (STDOUT):
 ----------<BEGIN AUTO GENERATED OUTPUT>-----------
 
+Ok you have allocated the array so far.
+Your answer is correct.
+Now we're gonna test with some reallocs!
+The first step is ok!
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
 
-Your final grade is: 0/100.0epoch: 1650890972
+Your final grade is: 4.5/100.0epoch: 1650894845
