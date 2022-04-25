@@ -133,10 +133,10 @@ void* mm_realloc(void* ptr, size_t size)
         memset(p, 0, size);
         if (size <= cur->size) {
             memcpy(p, ptr, size);
+            mm_free(cur->ptr);
             return cur->ptr;
-        } else {
-            memcpy(p, ptr, cur->size);
-        }           
+        }
+        memcpy(p, ptr, cur->size);
         mm_free(cur->ptr);
         return p;
     }
