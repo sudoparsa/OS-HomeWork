@@ -1,4 +1,4 @@
-I finished judging your code on 25-04-2022 at 14:27:03.
+I finished judging your code on 25-04-2022 at 14:31:43.
 
 I ran your code on each test case separately! You can see the results below:
 
@@ -41,14 +41,7 @@ Test 5: Split block simple test --> OK! 7.5 points; Afarin!!!
 
 
 ================================================================================================================
-Test 6: Test large amount of data --> Runtime error occurred (Exit code: -11)
-Although you got no points from this test, below is the output of the test (STDOUT):
-----------<BEGIN AUTO GENERATED OUTPUT>-----------
-
-Ok I just assured that you couldn't allocated 800 GB.
-You passed the first step...
-
------------<END AUTO GENERATED OUTPUT>------------
+Test 6: Test large amount of data --> OK! 10 points; Afarin!!!
 ================================================================================================================
 
 
@@ -78,4 +71,4 @@ You didn't preserve data in realloc (2)
 Test 10: Two dimensional array with arithmetic calculations on a real-world problem --> OK! 13.8 points; Afarin!!!
 ================================================================================================================
 
-Your final grade is: 58.85/100.0epoch: 1650896823
+Your final grade is: 68.85/100.0epoch: 1650897103
