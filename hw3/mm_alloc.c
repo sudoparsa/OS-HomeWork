@@ -165,18 +165,6 @@ void mm_free(void* ptr)
     }
     
     s_block_ptr cur = get_block(ptr);
-
-    if (cur) {
-        if (cur->next == NULL) {
-            if (cur->prev == NULL) {
-                head_ptr = NULL;
-            } else {
-                (cur->prev)->next=NULL;
-            }
-            sbrk(- cur->size - sizeof(s_block));
-        } else {
-            cur->free_ = 1;
-            fusion(cur);
-        }
-    } 
+    cur->free_ = 1;
+    fusion(cur);
 }
