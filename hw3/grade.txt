@@ -1,4 +1,4 @@
-I finished judging your code on 25-04-2022 at 14:31:43.
+I finished judging your code on 25-04-2022 at 14:40:24.
 
 I ran your code on each test case separately! You can see the results below:
 
@@ -71,4 +71,4 @@ You didn't preserve data in realloc (2)
 Test 10: Two dimensional array with arithmetic calculations on a real-world problem --> OK! 13.8 points; Afarin!!!
 ================================================================================================================
 
-Your final grade is: 68.85/100.0epoch: 1650897103
+Your final grade is: 68.85/100.0epoch: 1650897624
