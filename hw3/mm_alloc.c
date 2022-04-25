@@ -24,6 +24,24 @@ s_block_ptr get_block (void *p)
     return NULL;
 }
 
+s_block_ptr fusion(s_block_ptr b)
+{
+    if ((b->next)->free_ == 1) {
+        b->size = b->size + sizeof(s_block) +(b->next)->size;
+        b->next = (b->next)->next;
+        (b->next)->prev = b;
+        return b;
+    }
+    if ((b->prev)->free_ == 1) {
+        (b->prev)->size = (b->prev)->size + sizeof(s_block) + b->size;
+        (b->prev)->next = b->next;
+        (b->next)->prev = b->prev;
+        (b->prev)->free_ = b->free_;
+        return b->prev;
+    }
+    return NULL;
+}
+
 
 void split_block (s_block_ptr b, size_t s)
 {
@@ -101,9 +119,13 @@ void* mm_realloc(void* ptr, size_t size)
 
 void mm_free(void* ptr)
 {
+    if (ptr == NULL) {
+        return;
+    }
+    
     s_block_ptr cur = get_block(ptr);
 
-    if (cur) {
+    if (cur != NULL) {
         if (cur->next == NULL) {
             if (cur->prev == NULL) {
                 head_ptr = NULL;
@@ -113,8 +135,7 @@ void mm_free(void* ptr)
             sbrk(- cur->size - sizeof(s_block));
         } else {
             cur->free_ = 1;
-            // fusion(cur);
+            fusion(cur);
         }
     } 
-
 }
