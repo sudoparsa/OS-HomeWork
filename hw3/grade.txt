@@ -1,4 +1,4 @@
-I finished judging your code on 25-04-2022 at 14:40:24.
+I finished judging your code on 25-04-2022 at 14:45:13.
 
 I ran your code on each test case separately! You can see the results below:
 
@@ -8,13 +8,7 @@ Test 1: Simple test of alloc and free --> OK! 1.95 points; Afarin!!!
 
 
 ================================================================================================================
-Test 2: Test of exceptional cases --> Runtime error occurred (Exit code: 1)
-Although you got no points from this test, below is the output of the test (STDOUT):
-----------<BEGIN AUTO GENERATED OUTPUT>-----------
-
-It seems you haven't been careful enough...
-
------------<END AUTO GENERATED OUTPUT>------------
+Test 2: Test of exceptional cases --> OK! 2.15 points; Afarin!!!
 ================================================================================================================
 
 
@@ -24,14 +18,7 @@ Test 3: Fusion simple test --> OK! 4.5 points; Afarin!!!
 
 
 ================================================================================================================
-Test 4: Fusion complicated test --> Runtime error occurred (Exit code: 1)
-Although you got no points from this test, below is the output of the test (STDOUT):
-----------<BEGIN AUTO GENERATED OUTPUT>-----------
-
-Ok I just assured that you couldn't allocated 800 GB.
-I guess fusion is not working...
-
------------<END AUTO GENERATED OUTPUT>------------
+Test 4: Fusion complicated test --> OK! 11.5 points; Afarin!!!
 ================================================================================================================
 
 
@@ -71,4 +58,4 @@ You didn't preserve data in realloc (2)
 Test 10: Two dimensional array with arithmetic calculations on a real-world problem --> OK! 13.8 points; Afarin!!!
 ================================================================================================================
 
-Your final grade is: 68.85/100.0epoch: 1650897624
+Your final grade is: 82.5/100.0epoch: 1650897914
