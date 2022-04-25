@@ -1,4 +1,4 @@
-I finished judging your code on 25-04-2022 at 15:00:10.
+I finished judging your code on 25-04-2022 at 15:03:05.
 
 I ran your code on each test case separately! You can see the results below:
 
@@ -48,7 +48,7 @@ Although you got no points from this test, below is the output of the test (STDO
 ----------<BEGIN AUTO GENERATED OUTPUT>-----------
 
 Ok I just assured that you couldn't allocated 800 GB.
-Perhars you don't free in realloc
+You didn't preserve data in realloc (2)
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
@@ -58,4 +58,4 @@ Perhars you don't free in realloc
 Test 10: Two dimensional array with arithmetic calculations on a real-world problem --> OK! 13.8 points; Afarin!!!
 ================================================================================================================
 
-Your final grade is: 82.5/100.0epoch: 1650898810
+Your final grade is: 82.5/100.0epoch: 1650898985
