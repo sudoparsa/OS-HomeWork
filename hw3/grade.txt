@@ -1,4 +1,4 @@
-I finished judging your code on 25-04-2022 at 14:51:25.
+I finished judging your code on 25-04-2022 at 14:56:07.
 
 I ran your code on each test case separately! You can see the results below:
 
@@ -38,7 +38,13 @@ Test 7: A combination of fusion and split block --> OK! 25 points; Afarin!!!
 
 
 ================================================================================================================
-Test 8: Realloc simple test --> OK! 6.1 points; Afarin!!!
+Test 8: Realloc simple test --> Runtime error occurred (Exit code: 1)
+Although you got no points from this test, below is the output of the test (STDOUT):
+----------<BEGIN AUTO GENERATED OUTPUT>-----------
+
+Wrong realloc 2
+
+-----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
 
 
@@ -48,14 +54,23 @@ Although you got no points from this test, below is the output of the test (STDO
 ----------<BEGIN AUTO GENERATED OUTPUT>-----------
 
 Ok I just assured that you couldn't allocated 800 GB.
-Perhars you don't free in realloc
+You didn't zero data in realloc
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
 
 
 ================================================================================================================
-Test 10: Two dimensional array with arithmetic calculations on a real-world problem --> OK! 13.8 points; Afarin!!!
+Test 10: Two dimensional array with arithmetic calculations on a real-world problem --> Runtime error occurred (Exit code: 1)
+Although you got no points from this test, below is the output of the test (STDOUT):
+----------<BEGIN AUTO GENERATED OUTPUT>-----------
+
+Ok you have allocated the array so far.
+Your answer is correct.
+Now we're gonna test with some reallocs!
+The answer is not right. There must be some problems (2)...
+
+-----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
 
-Your final grade is: 82.5/100.0epoch: 1650898286
+Your final grade is: 62.6/100.0epoch: 1650898569
