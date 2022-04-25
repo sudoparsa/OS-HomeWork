@@ -46,14 +46,16 @@ s_block_ptr fusion(s_block_ptr b)
 
 void split_block (s_block_ptr b, size_t s)
 {
-    if (b == NULL || s < sizeof(void*)) {
+    if (b == NULL || s <= 0) {
         return;
     }
 
-    if(b->size - s >= sizeof(s_block) + sizeof(void*)) {
+    if(b->size - s >= sizeof(s_block)) {
         s_block_ptr p = (s_block_ptr) (b->ptr + s);
         p->prev = b;
-        (b->next)->prev = p;
+        if (p->next) {
+            (p->next)->prev = p;
+        }
         p->next = b->next;
         b->next = p;
         p->size = b->size - s - sizeof(s_block);
