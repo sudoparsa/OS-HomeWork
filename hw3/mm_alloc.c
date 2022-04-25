@@ -25,13 +25,12 @@ s_block_ptr get_block (void *p)
     return NULL;
 }
 
-s_block_ptr fusion(s_block_ptr b)
+void fusion(s_block_ptr b)
 {
     if (b->next != NULL && (b->next)->free_ == 1) {
         b->size = b->size + sizeof(s_block) +(b->next)->size;
         b->next = (b->next)->next;
         (b->next)->prev = b;
-        return b;
     }
     if (b->prev != NULL && (b->prev)->free_ == 1) {
         (b->prev)->size = (b->prev)->size + sizeof(s_block) + b->size;
@@ -40,9 +39,7 @@ s_block_ptr fusion(s_block_ptr b)
             (b->next)->prev = b->prev;
         }
         (b->prev)->free_ = b->free_;
-        return b->prev;
     }
-    return b;
 }
 
 
@@ -96,12 +93,12 @@ s_block_ptr extend_heap(s_block_ptr last, size_t s)
 
 void* mm_malloc(size_t size)
 {
-    if (head_ptr == NULL) {
-        return extend_heap(NULL, size);
-    }
-
     if (size == 0) {
         return NULL;
+    }
+
+    if (head_ptr == NULL) {
+        return extend_heap(NULL, size);
     }
 
     s_block_ptr head;
