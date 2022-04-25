@@ -130,6 +130,9 @@ void* mm_realloc(void* ptr, size_t size)
 
     if (cur) {
         if (size <= cur->size) {
+            if (size < cur->size) {
+                split_block(cur, size);
+            }
             return cur->ptr;
         } else {
             void *p = mm_malloc(size);
