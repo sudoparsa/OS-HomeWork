@@ -53,8 +53,8 @@ void split_block (s_block_ptr b, size_t s)
     if(b->size - s >= sizeof(s_block)) {
         s_block_ptr p = (s_block_ptr) (b->ptr + s);
         p->prev = b;
-        if (p->next) {
-            (p->next)->prev = p;
+        if (b->next) {
+            (b->next)->prev = p;
         }
         p->next = b->next;
         b->next = p;
@@ -87,9 +87,10 @@ s_block_ptr extend_heap(s_block_ptr last, size_t s)
     new_block->size = s;
     new_block->ptr = p + sizeof(s_block);
     memset(new_block->ptr, 0, new_block->size);
-    
+
     return new_block->ptr;
 }
+
 
 void* mm_malloc(size_t size)
 {
@@ -106,10 +107,8 @@ void* mm_malloc(size_t size)
 
     for (head = head_ptr; head; head = head->next) {
         if (head->free_ == 1 && head->size >= size) {
-            if (size < head->size) {
-                split_block(head, size);
-			}
-			head->free_ = 0;
+            head->free_ = 0;
+            split_block(head, size);
 			return head->ptr;
         }
         prev = head;
