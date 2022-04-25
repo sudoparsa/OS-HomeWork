@@ -1,13 +1,104 @@
-I finished judging your code on 25-04-2022 at 11:23:49.
+I finished judging your code on 25-04-2022 at 11:51:42.
 
-Compile error...
+I ran your code on each test case separately! You can see the results below:
 
+================================================================================================================
+Test 1: Simple test of alloc and free --> Runtime error occurred (Exit code: -11)
+Although you got no points from this test, below is the output of the test (STDOUT):
 ----------<BEGIN AUTO GENERATED OUTPUT>-----------
 
-There is an occurrence of 'malloc' in 'mm_alloc.h' which is not allowed! Remove it and then submit again.\nPlease note that you have to completely remove the usages; commenting them out won't solve the problem! Because we search the file like CTRL+F
-There is an occurrence of 'free' in 'mm_alloc.h' which is not allowed! Remove it and then submit again.\nPlease note that you have to completely remove the usages; commenting them out won't solve the problem! Because we search the file like CTRL+F
-There is an occurrence of 'free' in 'mm_alloc.c' which is not allowed! Remove it and then submit again.\nPlease note that you have to completely remove the usages; commenting them out won't solve the problem! Because we search the file like CTRL+F
-make: *** [Makefile:20: hard] Error 1
 
 -----------<END AUTO GENERATED OUTPUT>------------
-Your final grade is: 0/100.0epoch: 1650885830
+================================================================================================================
+
+
+================================================================================================================
+Test 2: Test of exceptional cases --> Runtime error occurred (Exit code: -11)
+Although you got no points from this test, below is the output of the test (STDOUT):
+----------<BEGIN AUTO GENERATED OUTPUT>-----------
+
+
+-----------<END AUTO GENERATED OUTPUT>------------
+================================================================================================================
+
+
+================================================================================================================
+Test 3: Fusion simple test --> Runtime error occurred (Exit code: -11)
+Although you got no points from this test, below is the output of the test (STDOUT):
+----------<BEGIN AUTO GENERATED OUTPUT>-----------
+
+
+-----------<END AUTO GENERATED OUTPUT>------------
+================================================================================================================
+
+
+================================================================================================================
+Test 4: Fusion complicated test --> Runtime error occurred (Exit code: -11)
+Although you got no points from this test, below is the output of the test (STDOUT):
+----------<BEGIN AUTO GENERATED OUTPUT>-----------
+
+
+-----------<END AUTO GENERATED OUTPUT>------------
+================================================================================================================
+
+
+================================================================================================================
+Test 5: Split block simple test --> Runtime error occurred (Exit code: -11)
+Although you got no points from this test, below is the output of the test (STDOUT):
+----------<BEGIN AUTO GENERATED OUTPUT>-----------
+
+
+-----------<END AUTO GENERATED OUTPUT>------------
+================================================================================================================
+
+
+================================================================================================================
+Test 6: Test large amount of data --> Runtime error occurred (Exit code: -11)
+Although you got no points from this test, below is the output of the test (STDOUT):
+----------<BEGIN AUTO GENERATED OUTPUT>-----------
+
+
+-----------<END AUTO GENERATED OUTPUT>------------
+================================================================================================================
+
+
+================================================================================================================
+Test 7: A combination of fusion and split block --> Runtime error occurred (Exit code: -11)
+Although you got no points from this test, below is the output of the test (STDOUT):
+----------<BEGIN AUTO GENERATED OUTPUT>-----------
+
+
+-----------<END AUTO GENERATED OUTPUT>------------
+================================================================================================================
+
+
+================================================================================================================
+Test 8: Realloc simple test --> Runtime error occurred (Exit code: -11)
+Although you got no points from this test, below is the output of the test (STDOUT):
+----------<BEGIN AUTO GENERATED OUTPUT>-----------
+
+
+-----------<END AUTO GENERATED OUTPUT>------------
+================================================================================================================
+
+
+================================================================================================================
+Test 9: Realloc complicated test --> Runtime error occurred (Exit code: -11)
+Although you got no points from this test, below is the output of the test (STDOUT):
+----------<BEGIN AUTO GENERATED OUTPUT>-----------
+
+
+-----------<END AUTO GENERATED OUTPUT>------------
+================================================================================================================
+
+
+================================================================================================================
+Test 10: Two dimensional array with arithmetic calculations on a real-world problem --> Runtime error occurred (Exit code: -11)
+Although you got no points from this test, below is the output of the test (STDOUT):
+----------<BEGIN AUTO GENERATED OUTPUT>-----------
+
+
+-----------<END AUTO GENERATED OUTPUT>------------
+================================================================================================================
+
+Your final grade is: 0/100.0epoch: 1650887502
