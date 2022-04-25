@@ -129,16 +129,17 @@ void* mm_realloc(void* ptr, size_t size)
     }
 
     s_block_ptr cur = get_block(ptr);
-
     if (cur) {
         void *p = mm_malloc(size);
         if (size <= cur->size) {
             memcpy(p, ptr, size);
-            mm_free(cur->ptr);
+            cur->free_ = 1;
+            fusion(cur);
             return cur->ptr;
         }
         memcpy(p, ptr, cur->size);
-        mm_free(cur->ptr);
+        cur->free_ = 1;
+        fusion(cur);
         return p;
     }
     return NULL;
@@ -152,6 +153,8 @@ void mm_free(void* ptr)
     }
     
     s_block_ptr cur = get_block(ptr);
-    cur->free_ = 1;
-    fusion(cur);
+    if (cur) {
+        cur->free_ = 1;
+        fusion(cur);
+    }
 }
