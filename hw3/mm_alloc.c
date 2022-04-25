@@ -91,6 +91,7 @@ void* mm_malloc(size_t size)
     if (size == 0) {
         return NULL;
     }
+
     if (head_ptr == NULL) {
         return extend_heap(NULL, size);
     }
@@ -114,6 +115,40 @@ void* mm_malloc(size_t size)
 
 void* mm_realloc(void* ptr, size_t size)
 {
+    if (size == 0) {
+        return NULL;
+    }
+
+    if (ptr == NULL) {
+        return mm_malloc(size);
+    }
+
+    s_block_ptr cur = get_block(ptr);
+
+    if (cur) {
+        if (size == cur->size) {
+            return cur->ptr;
+        }
+        if (size < cur->size) {
+            split_block(cur, size);
+            return cur->ptr;
+        }
+        if (size > cur->size) {
+            void *p = mm_malloc(size);
+			s_block_ptr p_block = get_block(p);
+			if (p_block) {
+                char *cur_start = (char *) cur->ptr;
+		        char *p_start = (char *) p_block->ptr;
+		        for(int i = 0; i < cur->size; i++) {
+                    *(p_start + i) = *(cur_start + i);
+                }
+				p = p_block->ptr;
+				mm_free(cur->ptr);
+				return p;
+			}
+        }
+    }
+    return NULL;
 
 }
 
@@ -125,7 +160,7 @@ void mm_free(void* ptr)
     
     s_block_ptr cur = get_block(ptr);
 
-    if (cur != NULL) {
+    if (cur) {
         if (cur->next == NULL) {
             if (cur->prev == NULL) {
                 head_ptr = NULL;
