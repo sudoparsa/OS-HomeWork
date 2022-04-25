@@ -1,17 +1,9 @@
-I finished judging your code on 25-04-2022 at 14:16:38.
+I finished judging your code on 25-04-2022 at 14:27:03.
 
 I ran your code on each test case separately! You can see the results below:
 
 ================================================================================================================
-Test 1: Simple test of alloc and free --> Runtime error occurred (Exit code: -11)
-Although you got no points from this test, below is the output of the test (STDOUT):
-----------<BEGIN AUTO GENERATED OUTPUT>-----------
-
-Malloc didn't crash!
-Malloc first step is ok!
-A simple cmp is ok.
-
------------<END AUTO GENERATED OUTPUT>------------
+Test 1: Simple test of alloc and free --> OK! 1.95 points; Afarin!!!
 ================================================================================================================
 
 
@@ -66,12 +58,7 @@ Test 7: A combination of fusion and split block --> OK! 25 points; Afarin!!!
 
 
 ================================================================================================================
-Test 8: Realloc simple test --> Runtime error occurred (Exit code: -11)
-Although you got no points from this test, below is the output of the test (STDOUT):
-----------<BEGIN AUTO GENERATED OUTPUT>-----------
-
-
------------<END AUTO GENERATED OUTPUT>------------
+Test 8: Realloc simple test --> OK! 6.1 points; Afarin!!!
 ================================================================================================================
 
 
@@ -88,16 +75,7 @@ You didn't preserve data in realloc (2)
 
 
 ================================================================================================================
-Test 10: Two dimensional array with arithmetic calculations on a real-world problem --> Runtime error occurred (Exit code: -11)
-Although you got no points from this test, below is the output of the test (STDOUT):
-----------<BEGIN AUTO GENERATED OUTPUT>-----------
-
-Ok you have allocated the array so far.
-Your answer is correct.
-Now we're gonna test with some reallocs!
-The first step is ok!
-
------------<END AUTO GENERATED OUTPUT>------------
+Test 10: Two dimensional array with arithmetic calculations on a real-world problem --> OK! 13.8 points; Afarin!!!
 ================================================================================================================
 
-Your final grade is: 37.0/100.0epoch: 1650896199
+Your final grade is: 58.85/100.0epoch: 1650896823
