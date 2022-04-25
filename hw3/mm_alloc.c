@@ -88,12 +88,12 @@ s_block_ptr extend_heap(s_block_ptr last, size_t s)
 
 void* mm_malloc(size_t size)
 {
-    if (size == 0) {
-        return NULL;
-    }
-
     if (head_ptr == NULL) {
         return extend_heap(NULL, size);
+    }
+
+    if (size == 0) {
+        return NULL;
     }
 
     s_block_ptr head;
