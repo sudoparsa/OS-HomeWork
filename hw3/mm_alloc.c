@@ -79,7 +79,6 @@ void* mm_malloc(size_t size)
         }
         prev = head;
     }
-
     return extend_heap(prev,size);
 }
 
