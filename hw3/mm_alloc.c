@@ -15,6 +15,7 @@
 
 s_block_ptr head_ptr = NULL;
 
+
 s_block_ptr get_block (void *p)
 {
     for (s_block_ptr head = head_ptr; head; head = head->next) {
@@ -24,6 +25,7 @@ s_block_ptr get_block (void *p)
     }
     return NULL;
 }
+
 
 void fusion(s_block_ptr b)
 {
@@ -49,7 +51,7 @@ void split_block (s_block_ptr b, size_t s)
         return;
     }
 
-    if(b->size - s >= sizeof(s_block)) {
+    if(b->size >= s + sizeof(s_block)) {
         s_block_ptr p = (s_block_ptr) (b->ptr + s);
         p->prev = b;
         if (b->next) {
@@ -101,10 +103,9 @@ void* mm_malloc(size_t size)
         return extend_heap(NULL, size);
     }
 
-    s_block_ptr head;
 	s_block_ptr prev = NULL;
 
-    for (head = head_ptr; head; head = head->next) {
+    for (s_block_ptr head = head_ptr; head; head = head->next) {
         if (head->free_ == 1 && head->size >= size) {
             head->free_ = 0;
             split_block(head, size);
@@ -115,6 +116,7 @@ void* mm_malloc(size_t size)
 
     return extend_heap(prev, size);
 }
+
 
 void* mm_realloc(void* ptr, size_t size)
 {
@@ -130,7 +132,6 @@ void* mm_realloc(void* ptr, size_t size)
 
     if (cur) {
         void *p = mm_malloc(size);
-        memset(p, 0, size);
         if (size <= cur->size) {
             memcpy(p, ptr, size);
             mm_free(cur->ptr);
@@ -141,8 +142,8 @@ void* mm_realloc(void* ptr, size_t size)
         return p;
     }
     return NULL;
-
 }
+
 
 void mm_free(void* ptr)
 {
