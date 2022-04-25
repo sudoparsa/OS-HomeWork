@@ -50,7 +50,7 @@ s_block_ptr extend_heap(s_block_ptr last, size_t s)
     }
     new_block->prev = last;
     new_block->next = NULL;
-    new_block->free = 0;
+    new_block->free_ = 0;
     new_block->size = s;
     new_block->ptr = p + sizeof(s_block);
 
@@ -70,11 +70,11 @@ void* mm_malloc(size_t size)
 	s_block_ptr prev = NULL;
 
     for (head = head_ptr; head; head = head->next) {
-        if (head->free == 1 && head->size >= size) {
+        if (head->free_ == 1 && head->size >= size) {
             if (size < head->size) {
                 split_block(head, size);
 			}
-			head->free = 0;
+			head->free_ = 0;
 			return head->ptr;
         }
         prev = head;
