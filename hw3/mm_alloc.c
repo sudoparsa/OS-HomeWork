@@ -42,7 +42,7 @@ s_block_ptr fusion(s_block_ptr b)
         (b->prev)->free_ = b->free_;
         return b->prev;
     }
-    return NULL;
+    return b;
 }
 
 
