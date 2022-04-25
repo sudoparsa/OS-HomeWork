@@ -62,6 +62,7 @@ void split_block (s_block_ptr b, size_t s)
         p->ptr = b->ptr + s + sizeof(s_block);
         b->size = s;
         mm_free(p->ptr);
+        memset(b->ptr, 0, b->size);
     }
 }
 
@@ -85,7 +86,8 @@ s_block_ptr extend_heap(s_block_ptr last, size_t s)
     new_block->free_ = 0;
     new_block->size = s;
     new_block->ptr = p + sizeof(s_block);
-
+    memset(new_block->ptr, 0, new_block->size);
+    
     return new_block->ptr;
 }
 
