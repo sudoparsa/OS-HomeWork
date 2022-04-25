@@ -6,7 +6,8 @@
  */
 
 #include "mm_alloc.h"
-
+#include <memory.h>
+#include <unistd.h>
 #include <stdlib.h>
 
 /* Your final implementation should comment out this macro. */
@@ -67,7 +68,7 @@ s_block_ptr extend_heap(s_block_ptr last, size_t s)
 {
     void *p = sbrk(s + sizeof(s_block));
 
-    if (p == (void *)-1) {
+    if (p == (void *) -1) {
         return NULL;
     }
 

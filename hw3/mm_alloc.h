@@ -21,7 +21,6 @@ void* mm_malloc(size_t size);
 void* mm_realloc(void* ptr, size_t size);
 void mm_free(void* ptr);
 
-
 typedef struct s_block *s_block_ptr;
 
 /* block struct */
