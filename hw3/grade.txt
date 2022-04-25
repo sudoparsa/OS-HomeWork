@@ -1,4 +1,4 @@
-I finished judging your code on 25-04-2022 at 13:54:05.
+I finished judging your code on 25-04-2022 at 14:06:05.
 
 I ran your code on each test case separately! You can see the results below:
 
@@ -109,9 +109,8 @@ Although you got no points from this test, below is the output of the test (STDO
 Ok you have allocated the array so far.
 Your answer is correct.
 Now we're gonna test with some reallocs!
-The first step is ok!
 
 -----------<END AUTO GENERATED OUTPUT>------------
 ================================================================================================================
 
-Your final grade is: 4.5/100.0epoch: 1650894845
+Your final grade is: 4.5/100.0epoch: 1650895566
