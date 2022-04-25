@@ -26,7 +26,7 @@ void mm_free(void* ptr);
 typedef struct s_block *s_block_ptr;
 
 /* block struct */
-struct s_block {
+typedef struct s_block {
     size_t size;
     struct s_block *next;
     struct s_block *prev;
@@ -34,7 +34,7 @@ struct s_block {
     void *ptr;
     /* A pointer to the allocated block */
     char data [0];
- };
+ } s_block;
 
 /* Split block according to size, b must exist */
 void split_block (s_block_ptr b, size_t s);
