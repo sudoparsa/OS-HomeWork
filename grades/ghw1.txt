@@ -7,4 +7,4 @@ used.
 Design(and warmup, in case of ghw1): 98.95
 Tests: 96
 Report: 96.67
-Final Grade: 96.67
+Final Grade: 96.69
