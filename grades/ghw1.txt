@@ -4,7 +4,7 @@ Group: 6
 The following grades are calculated according to the amount of delay you've
 used.
 
-Design: 100
-Tests: 95.7
+Design(and warmup, in case of ghw1): 98.95
+Tests: 96
 Report: 96.67
-Final Grade: 96.71
+Final Grade: 96.67
