@@ -1,0 +1,10 @@
+ID: 98109583
+Group: 6
+
+The following grades are calculated according to the amount of delay you've
+used.
+
+Design(and warmup, in case of ghw1): 100
+Tests: 100
+Report: 100
+Final Grade: 100
