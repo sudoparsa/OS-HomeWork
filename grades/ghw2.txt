@@ -1,0 +1,11 @@
+ID: 98109583
+Group: 6
+
+The following grades are calculated according to the amount of delay you've
+used.
+
+Design(and warmup, in case of ghw1): 98
+Tests: 100
+Scheduling Lab: 92.668
+Report: 95
+Final Grade: 98.1002
