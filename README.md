@@ -1,4 +1,1 @@
-##### In the name of God
-
-# CE424-002-handouts
-### Read-Only Repo
+### This is Parsa's personal repo for Sharif CE424 course. (Based on Berkley's CS162)
